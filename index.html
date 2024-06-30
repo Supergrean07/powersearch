@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sports Card Power Search</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #007acc;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            max-width: 400px;
+            height: 40px;
+            font-size: 18px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007acc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        .marketplaces {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .marketplace {
+            flex: 1 1 calc(50% - 20px);
+            text-align: left;
+        }
+        label {
+            font-size: 16px;
+        }
+        .recent-searches {
+            margin-top: 20px;
+        }
+        .recent-search {
+            margin: 5px 0;
+            cursor: pointer;
+            color: #007acc;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        .recent-search:hover {
+            color: #005fa3;
+        }
+        .clear-button {
+            margin-top: 10px;
+            cursor: pointer;
+            color: red;
+            text-decoration: underline;
+            display: none; /* Initially hidden */
+            transition: color 0.3s ease;
+        }
+        .clear-button:hover {
+            color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sports Card Power Search</h1>
+        <form onsubmit="searchSites(event)">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Enter search term">
+                <button type="submit">Search</button>
+            </div>
+            <div class="marketplaces">
+                <div class="marketplace">
+                    <input type="checkbox" id="ebay" name="marketplace" value="ebay" checked>
+                    <label for="ebay">eBay</label>
+                </div>
+                <div class="marketplace">
+                    <input type="checkbox" id="pwccWeekly" name="marketplace" value="pwccWeekly" checked>
+                    <label for="pwccWeekly">PWCC Weekly Auction</label>
+                </div>
+                <div class="marketplace">
+                    <input type="checkbox" id="pwccVault" name="marketplace" value="pwccVault" checked>
+                    <label for="pwccVault">PWCC Vault Marketplace</label>
+                </div>
+                <div class="marketplace">
+                    <input type="checkbox" id="myslabs" name="marketplace" value="myslabs" checked>
+                    <label for="myslabs">MySlabs</label>
+                </div>
+                <div class="marketplace">
+                    <input type="checkbox" id="cardhobby" name="marketplace" value="cardhobby" checked>
+                    <label for="cardhobby">CardHobby</label>
+                </div>
+                <div class="marketplace">
+                    <input type="checkbox" id="alt" name="marketplace" value="alt" checked>
+                    <label for="alt">Alt</label>
+                </div>
+                <div class="marketplace">
+                    <input type="checkbox" id="goldin" name="marketplace" value="goldin" checked>
+                    <label for="goldin">Goldin</label>
+                </div>
+                <div class="marketplace">
+                    <input type="checkbox" id="ha" name="marketplace" value="ha" checked>
+                    <label for="ha">Heritage Auctions</label>
+                </div>
+                <div class="marketplace">
+                    <input type="checkbox" id="comc" name="marketplace" value="comc" checked>
+                    <label for="comc">COMC</label>
+                </div>
+            </div>
+        </form>
+
+        <div class="recent-searches">
+            <h2>Recent Searches</h2>
+            <div id="recentSearchesContainer"></div>
+            <div class="clear-button" id="clearButton" onclick="clearRecentSearches()">Clear Recent Searches</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            displayRecentSearches();
+        });
+
+        function searchSites(event) {
+            event.preventDefault();
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm.trim() === "") return;
+            
+            saveSearchTerm(searchTerm); // Save the search term before performing the search
+            
+            const marketplaces = document.querySelectorAll('input[name="marketplace"]:checked');
+            let windowRefs = JSON.parse(localStorage.getItem('windowRefs')) || {};
+
+            marketplaces.forEach(marketplace => {
+                let url;
+                switch (marketplace.value) {
+                    case 'ebay':
+                        url = `https://www.ebay.com/sch/i.html?_from=R40&_trksid=p4432023.m570.l1312&_nkw=${encodeURIComponent(searchTerm)}&_sacat=0`;
+                        break;
+                    case 'pwccWeekly':
+                        url = `https://www.pwccmarketplace.com/weekly-auction/?q=${encodeURIComponent(searchTerm)}`;
+                        break;
+                    case 'pwccVault':
+                        url = `https://www.pwccmarketplace.com/vault-marketplace/?q=${encodeURIComponent(searchTerm)}`;
+                        break;
+                    case 'myslabs':
+                        url = `https://www.myslabs.com/search/slabs/?publish_type=0&owner=&q=${encodeURIComponent(searchTerm)}&o=created_desc/`;
+                        break;
+                    case 'cardhobby':
+                        url = `https://cardhobby.com/#/market?type=like&key=${encodeURIComponent(searchTerm)}`;
+                        break;
+                    case 'alt':
+                        url = `https://app.alt.xyz/browse?query=${encodeURIComponent(searchTerm)}&sortBy=newest_first`;
+                        break;
+                    case 'goldin':
+                        url = `https://goldin.co/buy/?search=${encodeURIComponent(searchTerm)}&sort=Ending_Soonest`;
+                        break;
+                    case 'ha':
+                        url = `https://www.ha.com/c/search/results.zx?term=${encodeURIComponent(searchTerm)}&ic=homepage-search-A-K-071316`;
+                        break;
+                    case 'comc':
+                        url = `https://www.comc.com/Cards,=${encodeURIComponent(searchTerm)}`;
+                        break;
+                }
+
+                if (windowRefs[marketplace.value] && !windowRefs[marketplace.value].closed) {
+                    windowRefs[marketplace.value].location.href = url;
+                } else {
+                    windowRefs[marketplace.value] = window.open(url, marketplace.value);
+                }
+            });
+
+            localStorage.setItem('windowRefs', JSON.stringify(windowRefs));
+            displayRecentSearches(); // Update the display of recent searches
+        }
+
+        function saveSearchTerm(searchTerm) {
+            let recentSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+            if (!recentSearches.includes(searchTerm)) {
+                recentSearches.unshift(searchTerm);
+                if (recentSearches.length > 5) {
+                    recentSearches.pop();
+                }
+                localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
+            }
+        }
+
+        function displayRecentSearches() {
+            const recentSearchesContainer = document.getElementById('recentSearchesContainer');
+            const clearButton = document.getElementById('clearButton');
+            recentSearchesContainer.innerHTML = '';
+            const recentSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+            if (recentSearches.length > 0) {
+                recentSearches.forEach(searchTerm => {
+                    const searchElement = document.createElement('div');
+                    searchElement.className = 'recent-search';
+                    searchElement.textContent = searchTerm;
+                    searchElement.onclick = () => {
+                        document.getElementById('searchInput').value = searchTerm;
+                        searchSites(new Event('submit'));
+                    };
+                    recentSearchesContainer.appendChild(searchElement);
+                });
+                clearButton.style.display = 'block'; // Show the clear button
+            } else {
+                clearButton.style.display = 'none'; // Hide the clear button
+            }
+        }
+
+        function clearRecentSearches() {
+            localStorage.removeItem('recentSearches');
+            displayRecentSearches();
+        }
+    </script>
+</body>
+</html>

@@ -182,6 +182,21 @@
                 z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
         })('bc4dbebc-2aed-41a5-7073-1fc30a74ed53');
 
+        pendo.initialize({
+            visitor: {
+                id: '<visitor-id-goes-here>',
+                email: '<email-goes-here>',
+                firstName: '<first-name-goes-here>',
+                lastName: '<last-name-goes-here>',
+            },
+
+            account: {
+                id: '<account-id-goes-here>',
+                accountName: '<account-name-goes-here>',
+                payingStatus: '<paying-status-goes-here>',
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             displayRecentSearches();
         });

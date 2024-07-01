@@ -71,10 +71,15 @@
             </div>
         </form>
 
-        <div class="recent-searches">
+        <div class="recent-searches mb-4">
             <h2>Recent Searches</h2>
             <div id="recentSearchesContainer" class="mb-3"></div>
             <div class="text-danger" id="clearButton" onclick="clearRecentSearches()" style="cursor: pointer; display: none;">Clear Recent Searches</div>
+        </div>
+
+        <div class="email-signup mb-4">
+            <h2>Sign Up for Updates</h2>
+            <iframe src="https://sportscardshowcase.substack.com/embed" width="100%" height="150" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
         </div>
     </div>
 
@@ -89,16 +94,24 @@
 
         pendo.initialize({
             visitor: {
-                id: '<visitor-id-goes-here>',
-                email: '<email-goes-here>',
-                firstName: '<first-name-goes-here>',
-                lastName: '<last-name-goes-here>',
+                id: 'VISITOR-UNIQUE-ID' // Required if user is logged in, default creates anonymous ID
+                // email: // Recommended if using Pendo Feedback, or NPS Email
+                // full_name: // Recommended if using Pendo Feedback
+                // role: // Optional
+                // You can add any additional visitor level key-values here,
+                // as long as it's not one of the above reserved names.
             },
 
             account: {
-                id: '<account-id-goes-here>',
-                accountName: '<account-name-goes-here>',
-                payingStatus: '<paying-status-goes-here>',
+                id: 'ACCOUNT-UNIQUE-ID' // Highly recommended
+                // name: // Optional
+                // is_paying: // Recommended if using Pendo Feedback
+                // monthly_value: // Recommended if using Pendo Feedback
+                // planLevel: // Optional
+                // planPrice: // Optional
+                // creationDate: // Optional
+                // You can add any additional account level key-values here,
+                // as long as it's not one of the above reserved names.
             }
         });
 

@@ -46,8 +46,8 @@
                 </div>
                 <div class="col-6 col-md-4">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="alt" name="marketplace" value="alt" checked>
-                        <label class="form-check-label" for="alt">Alt</label>
+                        <input class="form-check-input" type="checkbox" id="altLiquid" name="marketplace" value="altLiquid" checked>
+                        <label class="form-check-label" for="altLiquid">Alt Liquid Auctions</label>
                     </div>
                 </div>
                 <div class="col-6 col-md-4">
@@ -68,6 +68,12 @@
                         <label class="form-check-label" for="comc">COMC</label>
                     </div>
                 </div>
+                <div class="col-6 col-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="cardshq" name="marketplace" value="cardshq" checked>
+                        <label class="form-check-label" for="cardshq">CardsHQ</label>
+                    </div>
+                </div>
             </div>
         </form>
 
@@ -75,11 +81,6 @@
             <h2>Recent Searches</h2>
             <div id="recentSearchesContainer" class="mb-3"></div>
             <div class="text-danger" id="clearButton" onclick="clearRecentSearches()" style="cursor: pointer; display: none;">Clear Recent Searches</div>
-        </div>
-
-        <div class="email-signup mb-4">
-            <h2>Sign Up for Updates</h2>
-            <iframe src="https://sportscardshowcase.substack.com/embed" width="100%" height="150" style="border:1px solid #EEE; background:white;" frameborder="0" scrolling="no"></iframe>
         </div>
     </div>
 
@@ -147,8 +148,8 @@
                     case 'cardhobby':
                         url = `https://cardhobby.com/#/market?type=like&key=${encodeURIComponent(searchTerm)}`;
                         break;
-                    case 'alt':
-                        url = `https://app.alt.xyz/browse?query=${encodeURIComponent(searchTerm)}&sortBy=newest_first`;
+                    case 'altLiquid':
+                        url = `https://app.alt.xyz/liquid-auctions?sortBy=highest_alt_value_first`;
                         break;
                     case 'goldin':
                         url = `https://goldin.co/buy/?search=${encodeURIComponent(searchTerm)}&sort=Ending_Soonest`;
@@ -158,6 +159,9 @@
                         break;
                     case 'comc':
                         url = `https://www.comc.com/Cards,=${encodeURIComponent(searchTerm)}`;
+                        break;
+                    case 'cardshq':
+                        url = `https://www.cardshq.com/search?q=${encodeURIComponent(searchTerm)}&options%5Bprefix%5D=last`;
                         break;
                 }
 

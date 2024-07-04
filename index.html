@@ -26,7 +26,7 @@
         <form onsubmit="searchSites(event)" class="mb-4">
             <div class="input-group mb-3">
                 <input type="text" id="searchInput" class="form-control" placeholder="Enter search term">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary">Let's Go!!!</button>
             </div>
             <div class="text-muted mb-3">May contain affiliate links. Make sure your browser has enabled multiple new windows to open.</div>
             <div class="row">
@@ -165,7 +165,7 @@
                         url = `https://cardhobby.com/#/market?type=like&key=${encodeURIComponent(searchTerm)}`;
                         break;
                     case 'altLiquid':
-                        url = `https://app.alt.xyz/liquid-auctions?sortBy=highest_alt_value_first`;
+                        url = `https://app.alt.xyz/liquid-auctions?query=${encodeURIComponent(searchTerm)}&sortBy=highest_alt_value_first`;
                         break;
                     case 'goldin':
                         url = `https://goldin.co/buy/?search=${encodeURIComponent(searchTerm)}&sort=Ending_Soonest`;
@@ -196,7 +196,7 @@
             let recentSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
             if (!recentSearches.includes(searchTerm)) {
                 recentSearches.unshift(searchTerm);
-                if (recentSearches.length > 5) {
+                if (recentSearches.length > 10) {
                     recentSearches.pop();
                 }
                 localStorage.setItem('recentSearches', JSON.stringify(recentSearches));

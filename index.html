@@ -56,6 +56,12 @@
                 </div>
                 <div class="col-6 col-md-4">
                     <div class="form-check text-start">
+                        <input class="form-check-input" type="checkbox" id="myslabsAuction" name="marketplace" value="myslabsAuction" checked>
+                        <label class="form-check-label" for="myslabsAuction">MySlabs Auction</label>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="form-check text-start">
                         <input class="form-check-input" type="checkbox" id="cardhobby" name="marketplace" value="cardhobby" checked>
                         <label class="form-check-label" for="cardhobby">CardHobby</label>
                     </div>
@@ -88,6 +94,12 @@
                     <div class="form-check text-start">
                         <input class="form-check-input" type="checkbox" id="cardshq" name="marketplace" value="cardshq" checked>
                         <label class="form-check-label" for="cardshq">CardsHQ</label>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="form-check text-start">
+                        <input class="form-check-input" type="checkbox" id="arenaClub" name="marketplace" value="arenaClub" checked>
+                        <label class="form-check-label" for="arenaClub">Arena Club</label>
                     </div>
                 </div>
             </div>
@@ -150,7 +162,7 @@
                 let url;
                 switch (marketplace.value) {
                     case 'ebay':
-                        url = `https://www.ebay.com/sch/i.html?_from=R40&_trksid=p4432023.m570.l1312&_nkw=${encodeURIComponent(searchTerm)}&_sacat=0`;
+                        url = `https://www.ebay.com/sch/i.html?_from=R40&_trksid=p4432023.m570.l1312&_nkw=${encodeURIComponent(searchTerm)}&_sacat=0&campid=5339067563&customid=`;
                         break;
                     case 'pwccWeekly':
                         url = `https://www.pwccmarketplace.com/weekly-auction/?q=${encodeURIComponent(searchTerm)}`;
@@ -160,6 +172,9 @@
                         break;
                     case 'myslabs':
                         url = `https://www.myslabs.com/search/slabs/?publish_type=0&owner=&q=${encodeURIComponent(searchTerm)}&o=created_desc/`;
+                        break;
+                    case 'myslabsAuction':
+                        url = `https://www.myslabs.com/auction/search/all/?publish_type=all&owner=&q=${encodeURIComponent(searchTerm)}&o=endtime_asc`;
                         break;
                     case 'cardhobby':
                         url = `https://cardhobby.com/#/market?type=like&key=${encodeURIComponent(searchTerm)}`;
@@ -178,6 +193,9 @@
                         break;
                     case 'cardshq':
                         url = `https://www.cardshq.com/search?q=${encodeURIComponent(searchTerm)}&options%5Bprefix%5D=last`;
+                        break;
+                    case 'arenaClub':
+                        url = `https://arenaclub.com/marketplace?search%5Bquery%5D=${encodeURIComponent(searchTerm)}`;
                         break;
                 }
 
